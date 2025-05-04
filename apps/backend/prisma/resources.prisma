@@ -1,0 +1,68 @@
+/**
+ * Resource model:
+ * - this table is used for resources of the project
+ * - contractor can have multiple resources and projects
+ * - resource can be assigned to multiple projects
+ * - resource can be assigned to multiple contractors
+ */
+
+model Resource {
+    id       String @id @default(cuid())
+    name     String
+    quantity Int
+
+    // relations
+    contractorId   String
+    contractor     Contractor       @relation(fields: [contractorId], references: [id], onDelete: Cascade)
+    AssignResource AssignResource[]
+
+    createdAt       DateTime          @default(now())
+    updatedAt       DateTime          @updatedAt
+    RequireResource RequireResource[]
+}
+
+/**
+ * AssignResource:
+ * - assign resource is used for assigning resources to the project.
+ * - assign resource are the resources used foor the project.
+ */
+
+model AssignResource {
+    id        String   @id @default(cuid())
+    quantity  Int
+    startDate DateTime
+    endDate   DateTime
+
+    // relations
+    contractorId String
+    contractor   Contractor @relation(fields: [contractorId], references: [id], onDelete: Cascade)
+    resourceId   String
+    resource     Resource   @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+    projectId    String
+    project      Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+/**
+ * RequireResource:
+ * - require resource is used for required resources for the project.
+ * - require resource are the resources required for the project.
+ */
+
+model RequireResource {
+    id        String   @id @default(cuid())
+    quantity  Int
+    startDate DateTime
+    endDate   DateTime
+
+    // relations
+    projectId  String
+    project    Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+    resourceId String
+    resource   Resource @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
