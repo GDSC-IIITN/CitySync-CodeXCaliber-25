@@ -7,9 +7,9 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
-    "db:migrate": "cd apps/backend && pnpx prisma migrate dev --schema=./prisma/schema",
-    "db:generate": "cd apps/backend && pnpx prisma generate --schema=./prisma/schema",
-    "db:studio": "cd apps/backend && pnpx prisma studio --schema=./prisma/schema"
+    "db:migrate": "cd apps/backend && pnpx prisma migrate dev --schema=./prisma",
+    "db:generate": "cd apps/backend && pnpx prisma generate --schema=./prisma",
+    "db:studio": "cd apps/backend && pnpx prisma studio --schema=./prisma"
   },
   "devDependencies": {
     "prettier": "^3.5.3",
