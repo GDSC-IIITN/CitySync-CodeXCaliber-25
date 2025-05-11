@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,10 +5,91 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  relationMode = "prisma"
+  
 }
 
-model User{
-    id Int @id @default(autoincrement())
-    name String
+/**
+ * Issue Table:
+ * contains all the issues related to the projectId.
+ * Issue can be rasied by the department user and can be assigned to the department user.
+ */
+model Issue {
+  id          String      @id @default(cuid())
+  title       String
+  description String?
+  status      IssueStatus
+
+  // relations
+  documentId     String?
+  document       Document?      @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  projectId      String
+  project        Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdBy      String
+  departmentUser DepartmentUser @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  comments       Comment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+/**
+ * Documnet Table:
+ * contains all the documents related to the projectId.
+ */
+
+model Document {
+  id       String @id @default(cuid())
+  fileName String
+  fileUrl  String
+
+  // relations
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  Issue     Issue[]
+
+  createdAt DateTime @default(now())
+
+  @@map("documents")
+}
+
+/**
+ * Comment Table:
+ * contains all the comments related to the issueId.
+ */
+model Comment {
+  id   String @id @default(cuid())
+  text String
+
+  // relations
+  issueId   String
+  issue     Issue          @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  createdBy String
+  user      DepartmentUser @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([issueId, id])
+  @@index([createdBy, id])
+  @@map("comments")
+}
+
+enum UserRole {
+  muncipal
+}
+
+enum StatusEnum {
+  create
+  active
+  completed
+  onHold
+}
+
+enum assignType {
+  invited
+  owner
+}
+
+enum IssueStatus {
+  open
+  closed
 }

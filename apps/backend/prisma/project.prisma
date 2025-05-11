@@ -1,0 +1,64 @@
+/**
+ * Project model:
+ * - this table is used for projects of the department
+ * - departmentUser can create a project.
+ * - project can have multiple departments and users
+ * - project can be assigned to single contractor
+ * - project can have multiple resources and documents
+ * - project can have multiple issues
+ * - project can have multiple assign resources and require resources
+ * - project can have multiple project departments
+ */
+
+model Project {
+    id          String     @id @default(cuid())
+    title       String
+    description String?
+    startDate   DateTime
+    endDate     DateTime
+    status      StatusEnum @default(active)
+    geoLocation String
+
+    // relations
+    departmentUserId   String
+    departmentUser     DepartmentUser      @relation(fields: [departmentUserId], references: [id], onDelete: Cascade)
+    contractorId       String
+    contractor         Contractor          @relation(fields: [contractorId], references: [id], onDelete: Cascade)
+    assignResources    AssignResource[]
+    requireResources   RequireResource[]
+    documents          Document[]
+    projectDepartments ProjectDepartment[]
+    Issue              Issue[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([id, departmentUserId])
+    @@index([id, contractorId])
+    @@index([departmentUserId, contractorId])
+    @@map("projects")
+}
+
+/**
+ * ProjectDepartment:
+ * - this table is used for project departments
+ * - project can have multiple departments
+ * - department can be assigned to multiple projects
+ * - department can have multiple users and projects
+ * - department can be assigned to multiple projects
+ */
+
+model ProjectDepartment {
+    id String @id @default(cuid())
+
+    // relations
+    projectId    String
+    project      Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+    departmentId String
+    department   Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+    assignType   assignType @default(invited)
+
+    status Boolean @default(false)
+
+    @@map("project_departments")
+}
