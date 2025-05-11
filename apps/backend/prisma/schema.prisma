@@ -73,9 +73,7 @@ model Comment {
   @@map("comments")
 }
 
-enum UserRole {
-  muncipal
-}
+
 
 enum StatusEnum {
   create

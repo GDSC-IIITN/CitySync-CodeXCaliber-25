@@ -8,7 +8,6 @@ model Admin {
   id       String @id @default(cuid())
   username String @unique
   email    String @unique
-  phoneNo  String @unique
   password String
 
   // relations
@@ -65,13 +64,13 @@ model DepartmentUser {
   description String?
   phoneNo     String   @unique
   password    String
-  role        UserRole
+  role        UserRole @default(muncipal)
 
   // relations
   assingedById String?
-  asingedBy    Admin?     @relation(fields: [assingedById], references: [id], onDelete: Cascade)
-  departmentId String
-  department   Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  asingedBy    Admin?      @relation(fields: [assingedById], references: [id], onDelete: Cascade)
+  departmentId String?
+  department   Department? @relation(fields: [departmentId], references: [id], onDelete: Cascade)
   projects     Project[]
   comments     Comment[]
   Issue        Issue[]
@@ -102,7 +101,7 @@ model Contractor {
   password String
 
   //relations
-  project         Project[]
+  projects        Project[]
   resources       Resource[]
   assignResources AssignResource[]
 
@@ -112,4 +111,6 @@ model Contractor {
   @@map("contractors")
 }
 
-
+enum UserRole {
+  muncipal
+}
