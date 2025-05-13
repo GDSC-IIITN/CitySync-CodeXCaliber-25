@@ -24,9 +24,10 @@ app.get("/", (req, res) => {
 });
 
 // routes
-import { authRouter, healthCheckRouter } from "./routes";
+import { authRouter, healthCheckRouter, secureRoutes } from "./routes";
 
 app.use("/api", healthCheckRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/secure", secureRoutes);
 
 export default app;

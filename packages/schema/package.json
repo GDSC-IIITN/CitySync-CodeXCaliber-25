@@ -4,19 +4,10 @@
     "description": "",
     "type": "module",
     "exports": {
-        "./contractor": {
-            "import": "./schema/contractor.schema.ts",
-            "require": "./schema/contractor.schema.ts"
-        },
-        "./departmentUser": {
-            "import": "./schema/departmentUser.schema.ts",
-            "require": "./schema/departmentUser.schema.ts"
-        },
-        "./admin": {
-            "import": "./schema/admin.schema.ts",
-            "require": "./schema/admin.schema.ts"
-        },
-        "./infered": "./schema/infered.types.ts"
+        "./contractor": "./src/contractor.schema.ts",
+        "./departmentUser": "./src/departmentUser.schema.ts",
+        "./admin": "./src/admin.schema.ts",
+        "./infered": "./src/infered.types.ts"
     },
     "keywords": [],
     "author": "",

@@ -4,11 +4,11 @@ import {
     handleDepartmentUserLogout,
 } from "@be/controllers";
 import {
-    contractortAuthMiddleware,
-    departmentAuthMiddleware,
+    contractorAuthMiddleware,
+    adminAuthMiddleware,
+    departmentUserAuthMiddleware,
 } from "@be/middlewares";
 import { handleAdminLogout } from "@be/controllers/auth.controller";
-import { adminAuthMiddleware } from "@be/middlewares/admin.middleware";
 
 export const logoutRouter: Router = Router();
 
@@ -16,12 +16,12 @@ logoutRouter.get("/admin", adminAuthMiddleware, handleAdminLogout);
 
 logoutRouter.get(
     "/contractor",
-    contractortAuthMiddleware,
+    contractorAuthMiddleware,
     handleContractorLogout
 );
 
 logoutRouter.get(
     "/departmentUser",
-    departmentAuthMiddleware,
+    departmentUserAuthMiddleware,
     handleDepartmentUserLogout
 );
