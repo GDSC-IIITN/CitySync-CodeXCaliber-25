@@ -10,15 +10,16 @@ model Resource {
     id       String @id @default(cuid())
     name     String
     quantity Int
+    status   ResourceStatus @default(Available)
 
     // relations
     contractorId   String
     contractor     Contractor       @relation(fields: [contractorId], references: [id], onDelete: Cascade)
     AssignResource AssignResource[]
+    RequireResource RequireResource[]
 
     createdAt       DateTime          @default(now())
     updatedAt       DateTime          @updatedAt
-    RequireResource RequireResource[]
 }
 
 /**
@@ -65,4 +66,9 @@ model RequireResource {
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+}
+
+enum ResourceStatus {
+    Available
+    Unavailable
 }

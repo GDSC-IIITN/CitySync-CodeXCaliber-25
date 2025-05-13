@@ -1,0 +1,31 @@
+{
+    "name": "@repo/schema",
+    "version": "1.0.0",
+    "description": "",
+    "type": "module",
+    "exports": {
+        "./contractor": {
+            "import": "./schema/contractor.schema.ts",
+            "require": "./schema/contractor.schema.ts"
+        },
+        "./departmentUser": {
+            "import": "./schema/departmentUser.schema.ts",
+            "require": "./schema/departmentUser.schema.ts"
+        },
+        "./admin": {
+            "import": "./schema/admin.schema.ts",
+            "require": "./schema/admin.schema.ts"
+        },
+        "./infered": "./schema/infered.types.ts"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "typescript": "^5.8.3",
+        "zod": "^3.24.3"
+    },
+    "devDependencies": {
+        "@repo/typescript-config": "workspace:*"
+    }
+}
