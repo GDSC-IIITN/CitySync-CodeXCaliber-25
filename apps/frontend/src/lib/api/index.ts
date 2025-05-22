@@ -17,10 +17,13 @@ class ApiSdk {
 
     constructor() {
         this.mainInstance = this.createAxios(env.NEXT_PUBLIC_API_URL);
+        console.log("API URL: ", env.NEXT_PUBLIC_API_URL);
         this.secureRoutes = new SecureRoutes(this.mainInstance);
         this.contractorAuthApi = new ContractorAuthApi(this.mainInstance);
         this.adminAuthApi = new AdminAuthApi(this.mainInstance);
-        this.departmentUserAuthApi = new DepartmentUserAuthApi(this.mainInstance);
+        this.departmentUserAuthApi = new DepartmentUserAuthApi(
+            this.mainInstance
+        );
     }
 
     private createAxios(baseURL: string): Axios {

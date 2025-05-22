@@ -11,7 +11,7 @@ import { Role } from "@/types/userRole";
 
 interface ProtectedRouteProps {
     children: React.ReactNode;
-    roleType: Role;
+    roleType: Role;w
 }
 
 export default function ProtectedRoute({

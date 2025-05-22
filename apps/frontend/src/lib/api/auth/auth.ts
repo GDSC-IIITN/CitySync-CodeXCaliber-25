@@ -15,11 +15,13 @@ export class ContractorAuthApi {
     }
 
     async signup(contractorSignupSchema: ContractorSignupInput) {
-        const { data } = await this.axios.post(
+        console.log("req::: ", contractorSignupSchema);
+        const res = await this.axios.post(
             "/api/auth/signup/contractor",
             contractorSignupSchema
         );
-        return data;
+        console.log("res ", res);
+        return res.data;
     }
 
     async signin(contractorSigninSchema: ContractorSigninInput) {

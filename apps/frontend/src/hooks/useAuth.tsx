@@ -3,7 +3,20 @@
 import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import api from "@/lib/api";
+import {
+    AdminSigninInput,
+    ContractorSigninInput,
+    ContractorSignupInput,
+    DepartmentUserSigninInput,
+    DepartmentUserSignupInput,
+} from "@repo/schema/infered";
 
+/*  
+    hook for contractor authentication 
+    it check if contractor is authenticated or not
+    if authenticated it returns contractorId and isAuthenticated is true
+    if not authenticated it returns isAuthenticated is false and contractorId is null
+*/
 export const useContractorAuth = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [contractorId, setContractorId] = useState<string | null>(null);
@@ -36,6 +49,12 @@ export const useContractorAuth = () => {
     return { isAuthenticated, contractorId, setIsAuthenticated };
 };
 
+/*  
+    hook for admin authentication 
+    it check if admin is authenticated or not
+    if authenticated it returns adminId and isAuthenticated is true
+    if not authenticated it returns isAuthenticated is false and adminId is null
+*/
 export const useAdminAuth = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [adminId, setAdminId] = useState<string | null>(null);
@@ -68,6 +87,12 @@ export const useAdminAuth = () => {
     return { isAuthenticated, adminId, setIsAuthenticated };
 };
 
+/*  
+    hook for department authentication 
+    it check if department is authenticated or not
+    if authenticated it returns departmentId and isAuthenticated is true
+    if not authenticated it returns isAuthenticated is false and departmentId is null
+*/
 export const useDepartmentUserAuth = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [departmentUserId, setDepartmentUserId] = useState<string | null>(
@@ -102,11 +127,15 @@ export const useDepartmentUserAuth = () => {
     return { isAuthenticated, departmentUserId, setIsAuthenticated };
 };
 
+/*
+    login the admin
+*/
 export const useAdminSignin = () => {
     const { setIsAuthenticated } = useAdminAuth();
     return useMutation({
         mutationKey: ["adminSignin"],
-        mutationFn: api.adminAuthApi.signin,
+        mutationFn: (inputData: AdminSigninInput) =>
+            api.adminAuthApi.signin(inputData),
         onSuccess: (data) => {
             if (data.success === true) {
                 setIsAuthenticated(true);
@@ -115,11 +144,14 @@ export const useAdminSignin = () => {
     });
 };
 
+/*
+    logout the admin
+*/
 export const useAdminLogout = () => {
     const { setIsAuthenticated } = useAdminAuth();
     return useMutation({
         mutationKey: ["adminLogout"],
-        mutationFn: api.adminAuthApi.logout,
+        mutationFn: () => api.adminAuthApi.logout(),
         onSuccess: (data) => {
             if (data.success === true) {
                 setIsAuthenticated(false);
@@ -128,11 +160,15 @@ export const useAdminLogout = () => {
     });
 };
 
+/*
+    register the department user
+*/
 export const useDepartmentUserSignup = () => {
     const { setIsAuthenticated } = useDepartmentUserAuth();
     return useMutation({
         mutationKey: ["departmentUserSignup"],
-        mutationFn: api.departmentUserAuthApi.signup,
+        mutationFn: (inputData: DepartmentUserSignupInput) =>
+            api.departmentUserAuthApi.signup(inputData),
         onSuccess: (data) => {
             if (data.success === true) {
                 setIsAuthenticated(true);
@@ -141,11 +177,15 @@ export const useDepartmentUserSignup = () => {
     });
 };
 
+/*
+    login the department user
+*/
 export const useDepartmentUserSignin = () => {
     const { setIsAuthenticated } = useDepartmentUserAuth();
     return useMutation({
         mutationKey: ["departmentUserSignin"],
-        mutationFn: api.departmentUserAuthApi.signin,
+        mutationFn: (inputData: DepartmentUserSigninInput) =>
+            api.departmentUserAuthApi.signin(inputData),
         onSuccess: (data) => {
             if (data.success === true) {
                 setIsAuthenticated(true);
@@ -154,11 +194,14 @@ export const useDepartmentUserSignin = () => {
     });
 };
 
+/*
+    logout the department user
+*/
 export const useDepartmentUserLogout = () => {
     const { setIsAuthenticated } = useDepartmentUserAuth();
     return useMutation({
         mutationKey: ["departmentUserLogout"],
-        mutationFn: api.departmentUserAuthApi.logout,
+        mutationFn: () => api.departmentUserAuthApi.logout(),
         onSuccess: (data) => {
             if (data.success === true) {
                 setIsAuthenticated(false);
@@ -167,24 +210,37 @@ export const useDepartmentUserLogout = () => {
     });
 };
 
+/*
+    register the contractor
+*/
 export const useContractorSingup = () => {
     const { setIsAuthenticated } = useContractorAuth();
     return useMutation({
         mutationKey: ["contractorSignup"],
-        mutationFn: api.contractorAuthApi.signup,
+        mutationFn: (inputData: ContractorSignupInput) =>
+            api.contractorAuthApi.signup(inputData),
         onSuccess: (data) => {
             if (data.success === true) {
                 setIsAuthenticated(true);
+                console.log("Contractor signed up successfully");
             }
+        },
+        throwOnError(error) {
+            console.error("Error signing up contractor:", error);
+            return false; // Don't throw the error after logging it
         },
     });
 };
 
+/*
+    login the contractor
+*/
 export const useContractorSignin = () => {
     const { setIsAuthenticated } = useContractorAuth();
     return useMutation({
         mutationKey: ["contractorSignin"],
-        mutationFn: api.contractorAuthApi.signin,
+        mutationFn: (inputData: ContractorSigninInput) =>
+            api.contractorAuthApi.signin(inputData),
         onSuccess: (data) => {
             if (data.success === true) {
                 setIsAuthenticated(true);
@@ -193,11 +249,14 @@ export const useContractorSignin = () => {
     });
 };
 
+/*
+    logout the contractor
+*/
 export const useContractorLogout = () => {
     const { setIsAuthenticated } = useContractorAuth();
     return useMutation({
         mutationKey: ["contractorLogout"],
-        mutationFn: api.contractorAuthApi.logout,
+        mutationFn: () => api.contractorAuthApi.logout(),
         onSuccess: (data) => {
             if (data.success === true) {
                 setIsAuthenticated(false);
