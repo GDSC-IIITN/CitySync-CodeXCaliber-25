@@ -6,6 +6,7 @@ import {
     DepartmentUserSigninInput,
     DepartmentUserSignupInput,
 } from "@repo/schema/infered";
+import { BaseResponse } from "@/types/response/baseResponse";
 
 export class ContractorAuthApi {
     private axios: Axios;
@@ -14,7 +15,9 @@ export class ContractorAuthApi {
         this.axios = axios;
     }
 
-    async signup(contractorSignupSchema: ContractorSignupInput) {
+    async signup(
+        contractorSignupSchema: ContractorSignupInput
+    ): Promise<BaseResponse> {
         console.log("req::: ", contractorSignupSchema);
         const res = await this.axios.post(
             "/api/auth/signup/contractor",
@@ -24,7 +27,9 @@ export class ContractorAuthApi {
         return res.data;
     }
 
-    async signin(contractorSigninSchema: ContractorSigninInput) {
+    async signin(
+        contractorSigninSchema: ContractorSigninInput
+    ): Promise<BaseResponse> {
         const { data } = await this.axios.post(
             "/api/auth/signin/contractor",
             contractorSigninSchema
@@ -32,7 +37,7 @@ export class ContractorAuthApi {
         return data;
     }
 
-    async logout() {
+    async logout(): Promise<BaseResponse> {
         const { data } = await this.axios.get("/api/auth/logout/contractor", {
             withCredentials: true,
         });
@@ -47,7 +52,7 @@ export class AdminAuthApi {
         this.axios = axios;
     }
 
-    async signin(adminSigninSchema: AdminSigninInput) {
+    async signin(adminSigninSchema: AdminSigninInput): Promise<BaseResponse> {
         const { data } = await this.axios.post(
             "/api/auth/signin/admin",
             adminSigninSchema
@@ -55,7 +60,7 @@ export class AdminAuthApi {
         return data;
     }
 
-    async logout() {
+    async logout(): Promise<BaseResponse> {
         const { data } = await this.axios.get("/api/auth/logout/admin", {
             withCredentials: true,
         });
@@ -70,7 +75,9 @@ export class DepartmentUserAuthApi {
         this.axios = axios;
     }
 
-    async signup(departmentUserSignupSchema: DepartmentUserSignupInput) {
+    async signup(
+        departmentUserSignupSchema: DepartmentUserSignupInput
+    ): Promise<BaseResponse> {
         const { data } = await this.axios.post(
             "/api/auth/signup/departmentUser",
             departmentUserSignupSchema
@@ -78,7 +85,9 @@ export class DepartmentUserAuthApi {
         return data;
     }
 
-    async signin(departmentUserSigninSchema: DepartmentUserSigninInput) {
+    async signin(
+        departmentUserSigninSchema: DepartmentUserSigninInput
+    ): Promise<BaseResponse> {
         const { data } = await this.axios.post(
             "/api/auth/signin/departmentUser",
             departmentUserSigninSchema
@@ -86,7 +95,7 @@ export class DepartmentUserAuthApi {
         return data;
     }
 
-    async logout() {
+    async logout(): Promise<BaseResponse> {
         const { data } = await this.axios.get(
             "/api/auth/logout/departmentUser",
             { withCredentials: true }

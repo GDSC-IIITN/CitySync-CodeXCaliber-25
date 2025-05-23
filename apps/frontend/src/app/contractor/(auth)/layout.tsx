@@ -8,8 +8,6 @@ export default function DeapartmentUserLayout({
     children: ReactNode;
 }) {
     return (
-        <ProtectedRoute roleType={Role.CONTRACTOR}>
-            {children}
-        </ProtectedRoute>
+        <ProtectedRoute roleType={Role.CONTRACTOR}>{children}</ProtectedRoute>
     );
 }

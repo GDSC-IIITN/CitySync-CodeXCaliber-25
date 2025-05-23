@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ComponentProps, FormEvent, useRef } from "react";
-import { useContractorSingup } from "@/hooks/useAuth";
+import { useContractorSingup } from "@/hooks/api/useSignup";
+import { contractorSignupAuth } from "@repo/schema/contractor";
 
 export function SignupForm({ className, ...props }: ComponentProps<"form">) {
     const nameRef = useRef<HTMLInputElement>(null);
@@ -23,15 +24,18 @@ export function SignupForm({ className, ...props }: ComponentProps<"form">) {
         const gstinNum = gstinNumRef.current?.value;
         const password = passwordRef.current?.value;
 
-        controactor.mutate({
-            name: name || "",
-            email: email || "",
-            phoneNo: phoneNum || "",
-            GSTIN: gstinNum || "",
-            password: password || "",
+        const inputData = contractorSignupAuth.safeParse({
+            name: name,
+            email: email,
+            phoneNo: phoneNum,
+            GSTIN: gstinNum,
+            password: password,
         });
-
-        console.log({ name, email, phoneNum, gstinNum, password });
+        if (!inputData.success) {
+            console.log("Error: ", inputData.error);
+            return;
+        }
+        controactor.mutate(inputData.data);
     };
 
     return (

@@ -1,3 +1,6 @@
+import { IAdmin } from "@/types/response/admin/admin";
+import { IContractor } from "@/types/response/contractor/user";
+import { IDepartmentUser } from "@/types/response/departmentUser/departmentUser";
 import { Axios } from "axios";
 
 export class SecureRoutes {
@@ -7,17 +10,17 @@ export class SecureRoutes {
         this.axios = axios;
     }
 
-    async getContractorDetails() {
+    async getContractorDetails(): Promise<IContractor> {
         const { data } = await this.axios.get("/api/secure/contractor");
         return data;
     }
 
-    async getAdminDetails() {
+    async getAdminDetails(): Promise<IAdmin> {
         const { data } = await this.axios.get("/api/secure/admin");
         return data;
     }
 
-    async getDepartmentUserDetails() {
+    async getDepartmentUserDetails(): Promise<IDepartmentUser> {
         const { data } = await this.axios.get("/api/secure/departmentUser");
         return data;
     }

@@ -1,6 +1,5 @@
 import axios, { Axios, AxiosError } from "axios";
 import { env } from "../config/env";
-// import { redirect } from 'next/navigation';
 import { SecureRoutes } from "./auth/secureRoutes";
 import {
     AdminAuthApi,

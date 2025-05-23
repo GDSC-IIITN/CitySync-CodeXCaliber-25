@@ -2,16 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import {
-    useAdminAuth,
-    useContractorAuth,
-    useDepartmentUserAuth,
-} from "@/hooks/useAuth";
 import { Role } from "@/types/userRole";
+import { useAdminAuth, useContractorAuth, useDepartmentUserAuth } from "@/hooks/auth/useAuth";
 
 interface ProtectedRouteProps {
     children: React.ReactNode;
-    roleType: Role;w
+    roleType: Role;
 }
 
 export default function ProtectedRoute({
