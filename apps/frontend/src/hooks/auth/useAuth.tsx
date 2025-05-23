@@ -29,7 +29,7 @@ export const useContractorAuth = () => {
             return;
         }
 
-        if (data?.success) {
+        if (data) {
             setIsAuthenticated(true);
             setContractorId(data.data.id);
         } else {

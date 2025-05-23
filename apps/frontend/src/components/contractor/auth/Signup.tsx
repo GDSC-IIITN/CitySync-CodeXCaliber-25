@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { ComponentProps, FormEvent, useRef } from "react";
 import { useContractorSingup } from "@/hooks/api/useSignup";
 import { contractorSignupAuth } from "@repo/schema/contractor";
+import { useRouter } from "next/navigation";
 
 export function SignupForm({ className, ...props }: ComponentProps<"form">) {
     const nameRef = useRef<HTMLInputElement>(null);
@@ -15,8 +16,9 @@ export function SignupForm({ className, ...props }: ComponentProps<"form">) {
     const gstinNumRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
     const controactor = useContractorSingup();
+    const router = useRouter();
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async(e: FormEvent) => {
         e.preventDefault();
         const name = nameRef.current?.value;
         const email = emailRef.current?.value;
@@ -35,7 +37,8 @@ export function SignupForm({ className, ...props }: ComponentProps<"form">) {
             console.log("Error: ", inputData.error);
             return;
         }
-        controactor.mutate(inputData.data);
+        await controactor.mutateAsync(inputData.data);
+        router.push("/contractor/");                
     };
 
     return (
