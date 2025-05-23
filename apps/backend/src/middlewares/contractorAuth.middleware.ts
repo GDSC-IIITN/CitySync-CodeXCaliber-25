@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { ContractorService } from "@be/service";
 import { verifyToken } from "@be/utils/security.utils";
 
-export const contractortAuthMiddleware = async (
+export const contractorAuthMiddleware = async (
     req: Request,
     res: Response,
     next: NextFunction

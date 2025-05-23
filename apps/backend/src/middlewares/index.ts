@@ -1,4 +1,9 @@
-import { contractortAuthMiddleware } from "./contractorAuth.middleware";
-import { departmentAuthMiddleware } from "./departmentAuth.middlware";
+import { contractorAuthMiddleware } from "./contractorAuth.middleware";
+import { departmentUserAuthMiddleware } from "./departmentAuth.middlware";
+import { adminAuthMiddleware } from "./admin.middleware";
 
-export { contractortAuthMiddleware, departmentAuthMiddleware };
+export {
+    contractorAuthMiddleware,
+    departmentUserAuthMiddleware,
+    adminAuthMiddleware,
+};

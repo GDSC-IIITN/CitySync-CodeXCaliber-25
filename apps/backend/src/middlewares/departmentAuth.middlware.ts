@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { DepartmentUserService } from "@be/service";
 import { verifyToken } from "@be/utils/security.utils";
 
-export const departmentAuthMiddleware = async (
+export const departmentUserAuthMiddleware = async (
     req: Request,
     res: Response,
     next: NextFunction

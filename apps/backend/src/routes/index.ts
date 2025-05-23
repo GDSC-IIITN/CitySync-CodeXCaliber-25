@@ -1,3 +1,5 @@
 import { healthCheckRouter } from "./healtcheck.route";
 import { authRouter } from "./auth/auth.routes";
-export { healthCheckRouter, authRouter };
+import { secureRoutes } from "./auth/secure.routes";
+
+export { healthCheckRouter, authRouter, secureRoutes };
